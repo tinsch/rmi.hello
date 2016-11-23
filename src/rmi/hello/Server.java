@@ -1,15 +1,19 @@
 package rmi.hello;
 
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Server {
 	
 	public Server() {
 		try {
 			Greeter g = new Greeter();
-			Naming.rebind("rmi://localhost:1099/HelloWorld", g);
+			Registry registry = LocateRegistry.getRegistry();
+			registry.bind("Hello", g);
+			Naming.rebind("rmi://localhost:1099/Hello", g);
 		} catch (Exception e) {
-			System.out.println("Toot!");
+			System.out.println(e);
 		}
 	}
 
